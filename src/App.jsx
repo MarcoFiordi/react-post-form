@@ -40,6 +40,8 @@ function App() {
           <label htmlFor="public">Pubblico</label>
         </div>
 
+        <button type="submit">invia post</button>
+
       </form>
     </>
   )
