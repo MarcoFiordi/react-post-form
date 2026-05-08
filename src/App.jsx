@@ -10,25 +10,55 @@ function App() {
 
   console.log(formData);
 
+  const handleChange = (event) => {
+    const target = event.target;
+    const name = target.name;
+    const value = target.value;
+    const checked = target.checked;
+    const valueToUpdate = target.type === "checkbox" ? checked : value;
+
+    setFormData({
+      ...formData,
+      [name]: valueToUpdate,
+    });
+
+    
+
+  
+    
+    
+  }
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log("submit del form");
+    console.log("dati da inviare", formData);
+
+  }
+
   return (
     <>
       <h1>React post form</h1>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="author"
-          placeholder="Autore" />
+          placeholder="Autore"
+          onChange = {handleChange}
+        />
 
         <input
           type="text"
           name="title"
           placeholder="titolo"
+          onChange={handleChange}
         />
 
         <textarea
           name="body"
           placeholder="Testo del post"
+          onChange={handleChange}
         ></textarea>
 
         <div>
@@ -36,6 +66,7 @@ function App() {
             type="checkbox"
             id="public"
             name="public"
+            onChange={handleChange}
           />
           <label htmlFor="public">Pubblico</label>
         </div>
