@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+const API_URL = "https://67c5b4f3351c081993fb1ab6.mockapi.io/api/posts";
 function App() {
   const [formData, setFormData] = useState({
     author: '',
@@ -20,21 +20,28 @@ function App() {
     setFormData({
       ...formData,
       [name]: valueToUpdate,
-    });
-
-    
-
-  
-    
-    
+    });  
   }
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    console.log("submit del form");
-    console.log("dati da inviare", formData);
+    fetch(API_URL, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify(formData),
+    })
 
-  }
+      .then(response => {
+        return response.json();
+      })
+
+      .then(json => {
+        console.log(json);
+        
+      });
+  };
 
   return (
     <>
@@ -45,19 +52,22 @@ function App() {
           type="text"
           name="author"
           placeholder="Autore"
-          onChange = {handleChange}
+          value={formData.author}
+          onChange={handleChange}
         />
 
         <input
           type="text"
           name="title"
           placeholder="titolo"
+          value={formData.title}
           onChange={handleChange}
         />
 
         <textarea
           name="body"
           placeholder="Testo del post"
+          value={formData.body}
           onChange={handleChange}
         ></textarea>
 
@@ -66,6 +76,7 @@ function App() {
             type="checkbox"
             id="public"
             name="public"
+            checked={formData.public}
             onChange={handleChange}
           />
           <label htmlFor="public">Pubblico</label>
